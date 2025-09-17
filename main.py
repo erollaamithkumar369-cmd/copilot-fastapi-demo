@@ -1,7 +1,7 @@
 import os
 import msal
 import requests
-import psutil
+import psutil, shutil
 import os as _os
 import time
 import platform
@@ -238,8 +238,7 @@ if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=int(os.getenv("PORT", 8000)))
 
 
-from fastapi import FastAPI
-import psutil, shutil
+
 
 app = FastAPI()
 

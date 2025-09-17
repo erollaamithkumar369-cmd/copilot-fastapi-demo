@@ -236,3 +236,25 @@ def ai_plugin_manifest():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="0.0.0.0", port=int(os.getenv("PORT", 8000)))
+
+
+from fastapi import FastAPI
+import psutil, shutil
+
+app = FastAPI()
+
+@app.get("/health")
+def health():
+    cpu = psutil.cpu_percent()
+    memory = psutil.virtual_memory().percent
+    disk = shutil.disk_usage("/").used / shutil.disk_usage("/").total * 100
+    return {
+        "status": "OK",
+        "cpu": f"{cpu}%",
+        "memory": f"{memory}%",
+        "disk": f"{disk:.1f}%"
+    }
+
+@app.get("/")
+def root():
+    return {"message": "Hello from Copilot FastAPI Demo!"}
